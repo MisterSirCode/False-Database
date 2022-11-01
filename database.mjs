@@ -79,9 +79,14 @@ export class Pool extends Folder {
 }
 
 export class Database {
+    name = "";
+    cache = "";
     pools = {};
-    constructor(_output_, _name_) {
-
+    constructor(_cache_, _name_) {
+        if (typeof _name_ != "string") throw new TypeError(`Database name '${_name_}' must be a String`);
+            else this.name == _name_;
+        if (typeof _cache_ != "string") throw new TypeError(`Database path '${_cache_}' must be a String`);
+            else this.cache = _cache_;
     }
     createPool(_name_) {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
@@ -94,7 +99,6 @@ export class Database {
     }
     removePool(_name_) {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
-        else if (this.pools.contains(_name_))
-            delete this.pools[_name_];
+        else if (this.pools.contains(_name_)) delete this.pools[_name_];
     }
 }
