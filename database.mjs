@@ -7,9 +7,9 @@ export class Folder {
     }
     set items(_multi_) {
         if (!Array.isArray(_multi_)) throw new TypeError(`Tag is not an Array`);
-        else if (_multi_.length == 0) throw new RangeError(`Array contains no Items / Folders`);
+        else if (_multi_.length == 0) throw new RangeError(`Array contains no Items or Folders`);
         else {
-            if (Item.isItemArray(_multi_)) throw new TypeError(`Array contains a value that is not a Database Item / Folder`);
+            if (Item.isItemArray(_multi_)) throw new TypeError(`Array contains a value that is not a Database Item or Folder`);
             else this.data = _multi_;
         }
     }
@@ -27,12 +27,14 @@ export class Folder {
             else this.data[_tag_.name] = _item_;
         } else if (arguments.length == 1) {
             let _tag_ = arguments[0];
-            if (!(_tag_ instanceof Item || _tag_ instanceof Folder)) throw new TypeError(`${_tag_} is not a Database Item or Folder`);
+            if (!(_tag_ instanceof Item || _tag_ instanceof Folder)) throw new TypeError(`Tag is not a Database Item or Folder`);
             else if (!this.data.contains(_tag_.name)) throw new ReferenceError(`'${_tag_.name}' already exists in this ${this.type}`);
-        } else throw new RangeError(`Invalid parameter count for Add Function`);
+        }
     }
     static from(_name_, _data_) {
         if (typeof _name_ != "string") throw new TypeError(`Folder name '${_name_}' must be a String`);
+        else if (!Array.isArray(_data_)) throw new TypeError(`Folder data is not an Array`);
+        else if (!Item.isItemArray(_data_)) throw new TypeError(`Folder data contains a value that is not a Database Item or Folder`);
         else {
             let _folder_ = new Folder();
             _folder_.name = _name_;
@@ -44,8 +46,8 @@ export class Folder {
 
 export class Item {
     name = "";
-    type = null;
-    data = null;
+    type;
+    data;
     get value() {
         return this.data;
     }
@@ -64,10 +66,10 @@ export class Item {
         }
     }
     static isItemArray(_array_) {
-        let any = true;
+        let _any_ = true;
         for (let i = 0; i < _array_.length; i++)
-            if ((_array_[i] instanceof Item || _array_[i] instanceof Folder)) any = false;
-        return any;
+            if ((_array_[i] instanceof Item || _array_[i] instanceof Folder)) _any_ = false;
+        return _any_;
     }
 }
 
@@ -91,6 +93,8 @@ export class Database {
         }
     }
     removePool(_name_) {
-
+        if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
+        else if (this.pools.contains(_name_))
+            delete this.pools[_name_];
     }
 }
