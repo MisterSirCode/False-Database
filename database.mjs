@@ -7,34 +7,36 @@ export class Folder {
     }
     set items(_multi_) {
         if (!Array.isArray(_multi_)) throw new TypeError(`Tag is not an Array`);
-        else if (_multi_.length == 0) throw new RangeError(`Array contains no Items or Folders`);
+        else if (_multi_.length == 0) throw new RangeError(`Array includes no Items or Folders`);
         else {
-            if (Item.isItemArray(_multi_)) throw new TypeError(`Array contains a value that is not a Database Item or Folder`);
+            if (Item.isItemArray(_multi_)) throw new TypeError(`Array includes a value that is not a Database Item or Folder`);
             else this.data = _multi_;
         }
     }
     remove(_name_) {
-        if (!this.data.contains(_name_)) throw new ReferenceError(`'${_name_}' does not exist in this ${this.type}`);
+        if (!Object.keys(this.data).includes(_name_)) throw new ReferenceError(`'${_name_}' does not exist in this ${this.type}`);
         else delete this.data[_name_];
+        return this;
     }
     add() {
         if (arguments.length == 2) {
             let _tag_;
-            if (Array.isArray(arguments[1]))
-                if (Item.isItemArray(arguments[1])) _tag_ = Folder.from(...arguments);
-            else _tag_ = Item.from(...arguments);
-            if (!this.data.contains(_tag_.name)) throw new ReferenceError(`'${_tag_.name}' already exists in this ${this.type}`);
-            else this.data[_tag_.name] = _item_;
+            if (Array.isArray(arguments[1])) {
+                if (Item.isItemArray(arguments[1])) _tag_ = Folder.from(arguments[0], arguments[1]);
+            } else _tag_ = Item.from(arguments[0], arguments[1]);
+            if (Object.keys(this.data).includes(_tag_.name)) throw new ReferenceError(`'${_tag_.name}' already exists in this ${this.type}`);
+            else this.data[_tag_.name] = _tag_;
         } else if (arguments.length == 1) {
             let _tag_ = arguments[0];
             if (!(_tag_ instanceof Item || _tag_ instanceof Folder)) throw new TypeError(`Tag is not a Database Item or Folder`);
-            else if (!this.data.contains(_tag_.name)) throw new ReferenceError(`'${_tag_.name}' already exists in this ${this.type}`);
+            else if (!Object.keys(this.data).includes(_tag_.name)) throw new ReferenceError(`'${_tag_.name}' already exists in this ${this.type}`);
         }
+        return this;
     }
     static from(_name_, _data_) {
         if (typeof _name_ != "string") throw new TypeError(`Folder name '${_name_}' must be a String`);
         else if (!Array.isArray(_data_)) throw new TypeError(`Folder data is not an Array`);
-        else if (!Item.isItemArray(_data_)) throw new TypeError(`Folder data contains a value that is not a Database Item or Folder`);
+        else if (!Item.isItemArray(_data_)) throw new TypeError(`Folder data includes a value that is not a Database Item or Folder`);
         else {
             let _folder_ = new Folder();
             _folder_.name = _name_;
@@ -67,15 +69,15 @@ export class Item {
     }
     static isItemArray(_array_) {
         let _any_ = true;
-        for (let i = 0; i < _array_.length; i++)
+        for (let i = 0; i < _array_.length; i++) {
             if ((_array_[i] instanceof Item || _array_[i] instanceof Folder)) _any_ = false;
+        }
         return _any_;
     }
 }
 
 export class Pool extends Folder {
     type = "Pool";
-    write_ready = false;
 }
 
 export class Database {
@@ -84,21 +86,23 @@ export class Database {
     pools = {};
     constructor(_cache_, _name_) {
         if (typeof _name_ != "string") throw new TypeError(`Database name '${_name_}' must be a String`);
-            else this.name == _name_;
+            else this.name = _name_;
         if (typeof _cache_ != "string") throw new TypeError(`Database path '${_cache_}' must be a String`);
             else this.cache = _cache_;
     }
     createPool(_name_) {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
-        else if (this.pools.contains(_name_)) throw new ReferenceError(`Pool '${_name_}' already exists`);
+        else if (Object.keys(this.pools).includes(_name_)) throw new ReferenceError(`Pool '${_name_}' already exists`);
         else {
             let _pool_ = new Pool();
             _pool_.name = _name_;
             this.pools[_name_] = _pool_;
         }
+        return this;
     }
     removePool(_name_) {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
-        else if (this.pools.contains(_name_)) delete this.pools[_name_];
+        else if (this.pools.includes(_name_)) delete this.pools[_name_];
+        return this;
     }
 }
