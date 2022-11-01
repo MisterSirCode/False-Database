@@ -81,6 +81,8 @@ export class Pool extends Folder {
 }
 
 export class Database {
+    cbs = "low";
+    cbtime = 30000;
     name = "";
     cache = "";
     pools = {};
