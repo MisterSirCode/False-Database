@@ -2,7 +2,7 @@ export class Folder {
     name = "";
     type = "folder";
     get items() {
-        return Database.folder(this.data);
+        return this.data;
     }
     set items(_multi_) {
         if (!Array.isArray(_multi_)) throw new TypeError(`${_multi_} is not an Array of Database Items / Folders`);
@@ -33,6 +33,10 @@ export class Item {
 export class Pool {
     write_ready = false;
     data = {};
+    remove(tag) {
+        if (!this.data.contains(tag)) throw new ReferenceError(`${tag} does not exist in this Pool`);
+        else delete this.data[tag];
+    }
 }
 
 export class Database {
