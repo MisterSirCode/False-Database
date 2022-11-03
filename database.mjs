@@ -68,11 +68,10 @@ export class Item {
         }
     }
     static isItemArray(_array_) {
-        let _any_ = true;
-        for (let i = 0; i < _array_.length; i++) {
-            if ((_array_[i] instanceof Item || _array_[i] instanceof Folder)) _any_ = false;
-        }
-        return _any_;
+        let _any_ = 0;
+        for (let i = 0; i < _array_.length; i++)
+            if (!(_array_[i] instanceof Item || _array_[i] instanceof Folder)) _any_++;
+        return _any_ == 0 ? true : false;
     }
 }
 
