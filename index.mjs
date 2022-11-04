@@ -1,5 +1,6 @@
-import { Database, Item } from "./database.mjs";
+import { Database, Item, Folder } from "./database.mjs";
 import * as fs from 'fs';
+import * as util from 'util';
 
 let tdb = new Database("cache.jsdb", "Test Database");
 
@@ -8,13 +9,15 @@ tdb
     .createPool("Pool1")
 
 tdb.pools.Pool0
-    .add("Pool_Item_0", "string")
-    .add("Pool_Item_1", 1236742)
+    .add("Pool_String", "Hello World")
+    .add("Pool_Number", 3.14159)
 
 tdb.pools.Pool1
     .add("Folder_Test", [
-        Item.from("Folder_Item_0", false),
-        Item.from("Folder_Item_1", 3.14159)
+        Item.from("Folder_Boolean", false),
+        Folder.from("Sub_Folder_Test", [
+            Item.from("Sub_Folder_Array", ["Hello", 123, "Foo", 456])
+        ])
     ]);
 
-console.log(tdb.pools);
+console.log(util.inspect(tdb.pools.Pool1, false, null, true));
