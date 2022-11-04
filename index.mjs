@@ -1,6 +1,7 @@
 import { Database, Item, Folder } from "./database.mjs";
 import * as fs from 'fs';
 import * as util from 'util';
+import { table } from "console";
 
 let tdb = new Database("cache.jsdb", "Test Database");
 
@@ -20,4 +21,8 @@ tdb.pools.Pool1
         ])
     ]);
 
-console.log(util.inspect(tdb.pools.Pool1, false, null, true));
+console.log(util.inspect(tdb.pools, false, null, true));
+
+tdb.removePool("Pool1");
+
+console.log(util.inspect(tdb.pools, false, null, true));

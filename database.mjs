@@ -103,7 +103,7 @@ export class Database {
     }
     removePool(_name_) {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
-        else if (this.pools.includes(_name_)) delete this.pools[_name_];
+        else if (Object.keys(this.pools).includes(_name_)) delete this.pools[_name_];
         return this;
     }
 }
