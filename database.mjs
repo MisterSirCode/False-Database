@@ -1,3 +1,5 @@
+import { promises as   } from 'fs';
+
 export class Folder {
     name = "";
     type = "Folder";
@@ -105,5 +107,20 @@ export class Database {
         if (typeof _name_ != "string") throw new TypeError(`Pool name '${_name_}' must be a String`);
         else if (Object.keys(this.pools).includes(_name_)) delete this.pools[_name_];
         return this;
+    }
+    async store() {
+        let _data_ = {
+            name: this.name,
+            pools: this.pools
+        };
+        let _archive_ = JSON.stringify(_data_, null, "\t");
+        await fs.writeFile(this.cache, _archive_);
+    }
+    static async load(_cache_) {
+        let _archive_ = await fs.readFile(_cache_, 'utf8');
+        let _data_ = JSON.parse(_archive_);
+        let _database_ = new Database(_cache_, _data_.name);
+        _database_.pools = _data_.pools;
+        return _database_;
     }
 }
