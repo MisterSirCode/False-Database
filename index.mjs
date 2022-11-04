@@ -28,3 +28,7 @@ tdb.removePool("Pool1");
 console.log(util.inspect(tdb.pools, false, null, true));
 
 tdb.store();
+
+let db = await Database.load('./cache.jsdb').then((data) => {
+    console.log(data)
+})
