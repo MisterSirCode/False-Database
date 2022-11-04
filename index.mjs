@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import { table } from "console";
 
-let tdb = new Database("cache.jsdb", "Test Database");
+let tdb = new Database("./cache.jsdb", "Test Database");
 
 tdb
     .createPool("Pool0")
@@ -26,3 +26,5 @@ console.log(util.inspect(tdb.pools, false, null, true));
 tdb.removePool("Pool1");
 
 console.log(util.inspect(tdb.pools, false, null, true));
+
+tdb.store();

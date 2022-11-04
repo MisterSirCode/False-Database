@@ -1,0 +1,21 @@
+{
+	"name": "Test Database",
+	"pools": {
+		"Pool0": {
+			"name": "Pool0",
+			"type": "Pool",
+			"data": {
+				"Pool_String": {
+					"name": "Pool_String",
+					"type": "string",
+					"data": "Hello World"
+				},
+				"Pool_Number": {
+					"name": "Pool_Number",
+					"type": "number",
+					"data": 3.14159
+				}
+			}
+		}
+	}
+}

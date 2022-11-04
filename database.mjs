@@ -1,4 +1,4 @@
-import { promises as   } from 'fs';
+import { promises as fs } from 'fs';
 
 export class Folder {
     name = "";
