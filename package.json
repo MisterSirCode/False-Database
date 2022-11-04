@@ -1,8 +1,8 @@
 {
-  "name": "false-database",
+  "name": "falsedb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "database.js",
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

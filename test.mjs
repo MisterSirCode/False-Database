@@ -1,7 +1,5 @@
 import { Database, Item, Folder } from "./database.mjs";
-import * as fs from 'fs';
 import * as util from 'util';
-import { table } from "console";
 
 let tdb = new Database("./cache.jsdb", "Test Database");
 
