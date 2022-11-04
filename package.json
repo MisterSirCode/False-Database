@@ -2,19 +2,19 @@
   "name": "falsedb",
   "version": "1.0.0",
   "description": "",
-  "main": "database.js",
+  "main": "index.mjs",
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MisterSirCode/NodeJS-Database.git"
+    "url": "git+https://github.com/MisterSirCode/False-Database.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MisterSirCode/NodeJS-Database/issues"
+    "url": "https://github.com/MisterSirCode/False-Database/issues"
   },
-  "homepage": "https://github.com/MisterSirCode/NodeJS-Database#readme"
+  "homepage": "https://github.com/MisterSirCode/False-Database#readme"
 }
